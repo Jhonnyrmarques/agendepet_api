@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  api-agendepet-pg:
+    image: bitnami/postgresql
+    container_name: db_agendepet
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=${DB_USERNAME}
+      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+      - POSTGRESQL_DATABASE=${DB_DATABASE}

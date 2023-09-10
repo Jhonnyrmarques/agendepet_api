@@ -21,7 +21,6 @@ describe('User Register Use Case', () => {
       email: 'johndoe@email.com',
       password_hash: '123456',
       phone: '1198523698',
-      isAdmin: false,
     })
 
     expect(user.id).toEqual(expect.any(String))
@@ -34,7 +33,6 @@ describe('User Register Use Case', () => {
       email: 'johndoe@email.com',
       password_hash: '123456',
       phone: '1198523698',
-      isAdmin: false,
     })
 
     const correctlyHashedPassword = await compare('123456', user.password_hash)
@@ -49,7 +47,6 @@ describe('User Register Use Case', () => {
       email: 'johndoe@email.com',
       password_hash: '123456',
       phone: '1198523698',
-      isAdmin: false,
     })
 
     await expect(() =>
@@ -59,7 +56,6 @@ describe('User Register Use Case', () => {
         email: 'johndoe@email.com',
         password_hash: '123456',
         phone: '1198523698',
-        isAdmin: false,
       }),
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })

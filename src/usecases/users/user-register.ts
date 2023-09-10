@@ -10,7 +10,7 @@ interface UserRegisterUseCaseRequest {
   email: string
   password_hash: string
   phone: string
-  isAdmin: boolean
+  isAdmin?: boolean
 }
 
 interface UserRegisterUseCaseResponse {

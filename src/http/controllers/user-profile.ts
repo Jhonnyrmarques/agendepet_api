@@ -11,7 +11,7 @@ export async function userProfile(
   const { user } = await userProfileUseCase.execute({
     userId: request.user.sub,
   })
-  console.log(user)
+
   return reply.status(200).send({
     user: {
       ...user,

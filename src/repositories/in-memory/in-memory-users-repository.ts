@@ -43,25 +43,20 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user
   }
 
-  async userUpdate(
-    id: string,
-    first_name?: string,
-    last_name?: string,
-    phone?: string,
-  ) {
-    const findIndex = this.users.findIndex((user) => user.id === id)
+  async userUpdate(data: Prisma.UserUpdateInput) {
+    const findIndex = this.users.findIndex((user) => user.id === data.id)
 
     if (findIndex >= 0) {
-      if (first_name) {
-        this.users[findIndex].first_name = first_name
+      if (data.first_name) {
+        this.users[findIndex].first_name = data.first_name.toString()
       }
 
-      if (last_name) {
-        this.users[findIndex].last_name = last_name
+      if (data.last_name) {
+        this.users[findIndex].last_name = data.last_name.toString()
       }
 
-      if (phone) {
-        this.users[findIndex].phone = phone
+      if (data.phone) {
+        this.users[findIndex].phone = data.phone.toString()
       }
     }
 

@@ -28,12 +28,13 @@ export class UserUpdateUseCase {
       throw new UserNotExistError()
     }
 
-    const user = await this.usersRepository.userUpdate(
+    const user = await this.usersRepository.userUpdate({
       id,
       first_name,
       last_name,
       phone,
-    )
+      updated_at: new Date(),
+    })
 
     return {
       user,

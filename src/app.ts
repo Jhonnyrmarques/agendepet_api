@@ -1,7 +1,7 @@
 import fastify from 'fastify'
 
 // Routes
-import { usersRoutes } from './http/users-routes'
+import { usersRoutes } from './http/controllers/users/users-routes'
 
 import { ZodError } from 'zod'
 import { env } from './env'

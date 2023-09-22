@@ -52,4 +52,14 @@ export class InMemoryBreedsReposiotry implements BreedsRepository {
 
     return breed
   }
+
+  async fetchBreeds(query: string, page: number) {
+    const breeds = this.breeds
+      .filter((breed) => {
+        return breed.name.includes(query) || breed.kind.includes(query)
+      })
+      .slice((page - 1) * 20, page * 20)
+
+    return breeds
+  }
 }

@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { makeUserAuthenticationUseCase } from '@/usecases/factories/make-user-authentication-use-case'
 import { InvalidCredentialsError } from '@/errors/invalid-credentials-error'
+import { env } from '@/env'
 
 export async function authentication(
   request: FastifyRequest,
@@ -22,19 +23,41 @@ export async function authentication(
       email,
       password,
     })
+
     const token = await reply.jwtSign(
-      {},
+      {
+        role: user.role,
+      },
       {
         sign: {
           sub: user.id,
-          expiresIn: '30m',
         },
       },
     )
 
-    return reply.status(200).send({
-      token,
-    })
+    const refreshToken = await reply.jwtSign(
+      {
+        role: user.role,
+      },
+      {
+        sign: {
+          sub: user.id,
+          expiresIn: env.JWT_REFRESH_TOKEN_EXPIRESS,
+        },
+      },
+    )
+
+    return reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
+        token,
+      })
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(401).send({ message: err.message })

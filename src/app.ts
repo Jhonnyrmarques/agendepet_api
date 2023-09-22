@@ -2,18 +2,32 @@ import fastify from 'fastify'
 
 // Routes
 import { usersRoutes } from './http/controllers/users/users-routes'
+import { breedsRoutes } from './http/controllers/breeds/breeds-routes'
 
 import { ZodError } from 'zod'
 import { env } from './env'
+
+// JWT
 import fastifyJwt from '@fastify/jwt'
+import fastifyCookie from '@fastify/cookie'
 
 export const app = fastify()
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: env.JWT_TOKEN_EXPIRESS,
+  },
 })
 
+app.register(fastifyCookie)
+
 app.register(usersRoutes)
+app.register(breedsRoutes)
 
 // Formated Erros
 app.setErrorHandler((error, _, reply) => {

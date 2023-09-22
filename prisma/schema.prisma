@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  COMPANY
+  CLIENT
+}
+
 model User {
   id            String    @id @default(uuid())
   first_name    String
@@ -17,7 +23,7 @@ model User {
   email         String    @unique
   password_hash String
   phone         String
-  isAdmin       Boolean   @default(false)
+  role          Role      @default(CLIENT)
   created_at    DateTime  @default(now())
   updated_at    DateTime?
   Pet           Pet[]

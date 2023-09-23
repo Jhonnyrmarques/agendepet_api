@@ -42,4 +42,30 @@ export class PrismaBreedsRepository implements BreedsRepository {
 
     return breed
   }
+
+  async fetchBreeds(query: string, page: number) {
+    const breeds = await prisma.breed.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            kind: {
+              contains: query,
+              mode: 'insensitive',
+            },
+          },
+        ],
+      },
+
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return breeds
+  }
 }

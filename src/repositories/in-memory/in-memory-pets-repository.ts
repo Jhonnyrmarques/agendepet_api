@@ -26,16 +26,6 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async listPetsByUser(user_id: string) {
-    const pets = this.pets.filter((pet) => pet.user_id === user_id)
-
-    if (!pets) {
-      return null
-    }
-
-    return pets
-  }
-
   async findPetByNameAndKind(user_id: string, name: string, kind: string) {
     const pet = this.pets.find(
       (pet) =>
@@ -47,5 +37,18 @@ export class InMemoryPetsRepository implements PetsRepository {
     }
 
     return pet
+  }
+
+  async fetchPets(user_id: string, query: string, page: number) {
+    const pets = this.pets
+      .filter((pet) => {
+        return (
+          (pet.user_id === user_id && pet.name.includes(query)) ||
+          pet.kind.includes(query)
+        )
+      })
+      .slice((page - 1) * 20, page * 20)
+
+    return pets
   }
 }

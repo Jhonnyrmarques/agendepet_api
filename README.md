@@ -14,5 +14,5 @@
 </h3>
 
 <p>
-  Application for scheduling baths and grooming, making it easier for companies to contact their customers.
+  The AgendePet  API is a powerful tool for managing appointments for pet grooming services. This API allows pet owners to easily schedule appointments for their furry friends, and grooming salon operators to efficiently manage their booking system.
 </p>

@@ -46,4 +46,14 @@ export class PrismaUsersRepository implements UsersRepository {
 
     return user
   }
+
+  async findUserByPhone(phone: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        phone,
+      },
+    })
+
+    return user
+  }
 }

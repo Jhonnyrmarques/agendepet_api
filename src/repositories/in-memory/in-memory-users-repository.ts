@@ -64,4 +64,14 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return this.users[findIndex]
   }
+
+  async findUserByPhone(phone: string) {
+    const user = this.users.find((user) => user.phone === phone)
+
+    if (!user) {
+      return null
+    }
+
+    return user
+  }
 }

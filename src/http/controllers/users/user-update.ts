@@ -28,7 +28,7 @@ export async function userUpdate(request: FastifyRequest, reply: FastifyReply) {
       user: {
         ...user,
         password_hash: undefined,
-        isAdmin: undefined,
+        role: undefined,
       },
     })
   } catch (err) {

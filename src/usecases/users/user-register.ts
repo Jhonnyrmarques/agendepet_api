@@ -1,4 +1,4 @@
-import { User } from '@prisma/client'
+import { Role, User } from '@prisma/client'
 
 import { UsersRepository } from '@/repositories/users-repository'
 import { hash } from 'bcryptjs'
@@ -10,7 +10,7 @@ interface UserRegisterUseCaseRequest {
   email: string
   password_hash: string
   phone: string
-  isAdmin?: boolean
+  role?: Role
 }
 
 interface UserRegisterUseCaseResponse {
@@ -26,7 +26,7 @@ export class UserRegisterUseCase {
     email,
     password_hash,
     phone,
-    isAdmin,
+    role,
   }: UserRegisterUseCaseRequest): Promise<UserRegisterUseCaseResponse> {
     const userAlreadyExists = await this.usersRepository.findUserByEmail(email)
 
@@ -42,7 +42,7 @@ export class UserRegisterUseCase {
       email,
       password_hash: password,
       phone,
-      isAdmin,
+      role,
     })
 
     return {

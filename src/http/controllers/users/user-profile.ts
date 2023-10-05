@@ -16,7 +16,7 @@ export async function userProfile(
     user: {
       ...user,
       password_hash: undefined,
-      isAdmin: undefined,
+      role: undefined,
     },
   })
 }

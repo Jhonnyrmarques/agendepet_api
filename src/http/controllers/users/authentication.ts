@@ -31,6 +31,7 @@ export async function authentication(
       {
         sign: {
           sub: user.id,
+          expiresIn: env.JWT_TOKEN_EXPIRESS,
         },
       },
     )

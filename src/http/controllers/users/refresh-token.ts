@@ -16,6 +16,7 @@ export async function refreshToken(
     {
       sign: {
         sub: request.user.sub,
+        expiresIn: env.JWT_TOKEN_EXPIRESS,
       },
     },
   )

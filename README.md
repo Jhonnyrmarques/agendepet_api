@@ -28,6 +28,24 @@ git clone https://github.com/Jhonnyrmarques/agendepet_api
 ```bash
 npm install
 ```
+<p>3. Fill in the information inside the .env file </p>
+
+```bash
+ NODE_ENV=dev
+ PORT=
+
+ ## DATABASE
+ POSTGRESQL_USERNAME=
+ POSTGRESQL_PASSWORD=
+ POSTGRESQL_DATABASE=
+
+ DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+
+ ## Auth
+ JWT_SECRET=
+ JWT_TOKEN_EXPIRESS=
+ JWT_REFRESH_TOKEN_EXPIRESS=
+```
 
 <h3>:rocket: Getting Start:</h3>
 

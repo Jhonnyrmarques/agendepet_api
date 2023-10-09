@@ -7,6 +7,9 @@
     "start:dev": "tsx watch src/server.ts",
     "test": "vitest run"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

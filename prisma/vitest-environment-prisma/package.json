@@ -1,6 +1,7 @@
 {
   "name": "vitest-environment-prisma",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "prisma-test-environment.js",
   "keywords": [],

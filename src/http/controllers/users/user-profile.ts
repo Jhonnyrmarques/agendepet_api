@@ -1,6 +1,5 @@
 import { makeUserProfileUseCase } from '@/usecases/factories/make-user-profile-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { undefined } from 'zod'
 
 export async function userProfile(
   request: FastifyRequest,

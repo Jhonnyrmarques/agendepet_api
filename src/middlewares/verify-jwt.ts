@@ -1,19 +1,10 @@
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const errorTokenMessagesReturn = {
-  badRequestErrorMessage: 'Format is Authorization: Bearer [token]',
-  badCookieRequestErrorMessage: 'Cookie could not be parsed in request',
-  noAuthorizationInHeaderMessage:
-    'No Authorization was found in request.headers',
-  noAuthorizationInCookieMessage:
-    'No Authorization was found in request.cookies',
-  authorizationTokenExpiredMessage: 'Authorization token expired',
-  authorizationTokenUntrusted: 'Untrusted authorization token',
-  authorizationTokenUnsigned: 'Unsigned authorization token',
+import { errorTokenMessagesReturn } from '../../src/utils/jwtmessages'
 
-  authorizationTokenInvalid: (err: any) => {
-    return `Authorization token is invalid: ${err.message}`
-  },
+interface Payload {
+  sub: string
 }
 
 export async function verifyJWT(request: FastifyRequest, reply: FastifyReply) {
@@ -24,7 +15,13 @@ export async function verifyJWT(request: FastifyRequest, reply: FastifyReply) {
   }
 
   try {
-    await request.jwtVerify()
+    const { sub } = (await request.jwtVerify()) as Payload
+    const user = new PrismaUsersRepository()
+    const userExists = await user.findUserById(sub)
+
+    if (!userExists) {
+      return reply.status(404).send({ message: 'User does not exits' })
+    }
   } catch (err) {
     return reply.status(401).send({
       message: `${errorTokenMessagesReturn.authorizationTokenInvalid(err)}`,

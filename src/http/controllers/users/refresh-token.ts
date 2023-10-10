@@ -1,4 +1,5 @@
 import { env } from '@/env'
+import { makeRefreshTokenUseCase } from '@/usecases/factories/make-refresh-token-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function refreshToken(
@@ -7,7 +8,7 @@ export async function refreshToken(
 ) {
   await request.jwtVerify({ onlyCookie: true })
 
-  const { role } = request.user
+  const { role, sub } = request.user
 
   const token = await reply.jwtSign(
     {
@@ -15,7 +16,7 @@ export async function refreshToken(
     },
     {
       sign: {
-        sub: request.user.sub,
+        sub,
         expiresIn: env.JWT_TOKEN_EXPIRESS,
       },
     },
@@ -25,11 +26,18 @@ export async function refreshToken(
     { role },
     {
       sign: {
-        sub: request.user.sub,
+        sub,
         expiresIn: env.JWT_REFRESH_TOKEN_EXPIRESS,
       },
     },
   )
+
+  const refreshTokenUseCase = makeRefreshTokenUseCase()
+
+  await refreshTokenUseCase.execute({
+    refresh_token: refreshToken,
+    user_id: sub,
+  })
 
   return reply
     .setCookie('refreshToken', refreshToken, {

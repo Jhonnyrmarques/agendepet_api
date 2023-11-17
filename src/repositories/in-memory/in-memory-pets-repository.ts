@@ -12,9 +12,11 @@ export class InMemoryPetsRepository implements PetsRepository {
       user_id: data.user_id,
       breed_id: data.breed_id,
       name: data.name,
-      kind: data.kind,
+      specie: data.specie,
       gender: data.gender,
       size: data.size,
+      avatar: null,
+      avatar_url: null,
       age: new Decimal(data.age.toString()),
       observations: data.observations,
       created_at: new Date(),
@@ -26,10 +28,10 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findPetByNameAndKind(user_id: string, name: string, kind: string) {
+  async findPetByNameAndSpecie(user_id: string, name: string, specie: string) {
     const pet = this.pets.find(
       (pet) =>
-        pet.user_id === user_id && pet.name === name && pet.kind === kind,
+        pet.user_id === user_id && pet.name === name && pet.specie === specie,
     )
 
     if (!pet) {
@@ -44,7 +46,7 @@ export class InMemoryPetsRepository implements PetsRepository {
       .filter((pet) => {
         return (
           (pet.user_id === user_id && pet.name.includes(query)) ||
-          pet.kind.includes(query)
+          pet.specie.includes(query)
         )
       })
       .slice((page - 1) * 20, page * 20)

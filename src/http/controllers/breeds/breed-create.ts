@@ -1,6 +1,7 @@
-import { BreedAlreadyExistsError } from '@/errors/breed-already-exists-error'
 import { makeBreedCreateUseCase } from '@/usecases/factories/make-breed-create-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
+
+import { ErrorMessages } from '@/errors/error-messages'
 
 import z from 'zod'
 
@@ -10,19 +11,19 @@ export async function breedCreate(
 ) {
   const breedCreateBodyScheema = z.object({
     name: z.string(),
-    kind: z.string(),
+    specie: z.string(),
   })
 
-  const { name, kind } = breedCreateBodyScheema.parse(request.body)
+  const { name, specie } = breedCreateBodyScheema.parse(request.body)
 
   const breedCreateUsecase = makeBreedCreateUseCase()
 
   try {
-    await breedCreateUsecase.execute({ name, kind })
+    await breedCreateUsecase.execute({ name, specie })
 
     reply.status(201).send()
   } catch (err) {
-    if (err instanceof BreedAlreadyExistsError) {
+    if (err instanceof ErrorMessages) {
       reply.status(409).send({ message: err.message })
     }
 

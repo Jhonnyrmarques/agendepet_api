@@ -4,8 +4,7 @@ import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-
 import { PetCreateUseCase } from './pet-create'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { InMemoryBreedsReposiotry } from '@/repositories/in-memory/in-memory-breeds-repository'
-
-import { PetAlreadyExistsError } from '@/errors/pet-already-exists-error'
+import { ErrorMessages } from '@/errors/error-messages'
 
 let petsRepository: InMemoryPetsRepository
 let petCreateUseCase: PetCreateUseCase
@@ -33,14 +32,14 @@ describe('Create Pet Use Case', () => {
     const breed = await breedsRepository.create({
       id: 'breed-1',
       name: 'Akita',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     const { pet } = await petCreateUseCase.execute({
       name: 'Pricesa',
       age: 8,
       gender: 'Fêmea',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
       size: 'Médio',
       breed_id: breed.id,
       user_id: user.id,
@@ -63,14 +62,14 @@ describe('Create Pet Use Case', () => {
     const breed = await breedsRepository.create({
       id: 'breed-2',
       name: 'Beagle',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     await petCreateUseCase.execute({
       name: 'Rex',
       age: 10,
       gender: 'Macho',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
       size: 'Pequeno',
       breed_id: breed.id,
       user_id: user.id,
@@ -82,12 +81,12 @@ describe('Create Pet Use Case', () => {
         name: 'Rex',
         age: 10,
         gender: 'Macho',
-        kind: 'Cachorro',
+        specie: 'Cachorro',
         size: 'Pequeno',
         breed_id: breed.id,
         user_id: user.id,
         observations: '',
       }),
-    ).rejects.toBeInstanceOf(PetAlreadyExistsError)
+    ).rejects.toBeInstanceOf(ErrorMessages)
   })
 })

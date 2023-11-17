@@ -1,12 +1,13 @@
-import { PetAlreadyExistsError } from '@/errors/pet-already-exists-error'
 import { PetsRepository } from '@/repositories/pets-repository'
 import { Pet } from '@prisma/client'
+
+import { ErrorMessages } from '@/errors/error-messages'
 
 interface PetCreateUseCaseRequest {
   name: string
   user_id: string
   breed_id: string
-  kind: string
+  specie: string
   gender: string
   size: string
   age: number
@@ -24,27 +25,27 @@ export class PetCreateUseCase {
     name,
     user_id,
     breed_id,
-    kind,
+    specie,
     gender,
     size,
     age,
     observations,
   }: PetCreateUseCaseRequest): Promise<PetCreateUseCaseResponse> {
-    const petExists = await this.petsRepository.findPetByNameAndKind(
+    const petExists = await this.petsRepository.findPetByNameAndSpecie(
       user_id,
       name,
-      kind,
+      specie,
     )
 
     if (petExists) {
-      throw new PetAlreadyExistsError()
+      throw new ErrorMessages('Pet already exists.')
     }
 
     const pet = await this.petsRepository.create({
       name,
       user_id,
       breed_id,
-      kind,
+      specie,
       gender,
       size,
       age,

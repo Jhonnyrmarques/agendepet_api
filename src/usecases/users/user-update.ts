@@ -1,4 +1,4 @@
-import { UserNotExistError } from '@/errors/user-not-exist-error'
+import { ErrorMessages } from '@/errors/error-messages'
 import { UsersRepository } from '@/repositories/users-repository'
 import { User } from '@prisma/client'
 
@@ -25,7 +25,7 @@ export class UserUpdateUseCase {
     const userExists = await this.usersRepository.findUserById(id)
 
     if (!userExists) {
-      throw new UserNotExistError()
+      throw new ErrorMessages('User not exists')
     }
 
     const user = await this.usersRepository.userUpdate({

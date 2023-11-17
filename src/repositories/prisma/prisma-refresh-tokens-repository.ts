@@ -28,4 +28,17 @@ export class PrismaRefreshTokensRepository implements RefreshTokensRepository {
       },
     })
   }
+
+  async updateRefreshToken(data: Prisma.RefreshTokenUncheckedUpdateInput) {
+    const refreshToken = await prisma.refreshToken.update({
+      where: {
+        id: data.id?.toString(),
+      },
+      data: {
+        refresh_token: data.refresh_token,
+      },
+    })
+
+    return refreshToken
+  }
 }

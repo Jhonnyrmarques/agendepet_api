@@ -7,4 +7,8 @@ export class DayJs {
   addDays(days: number): Date {
     return dayjs().add(days, 'days').toDate()
   }
+
+  compareDateIsBefore(date: Date): boolean {
+    return dayjs(date).isBefore(new Date())
+  }
 }

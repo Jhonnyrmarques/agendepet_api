@@ -16,6 +16,8 @@ export class InMemoryUsersRepository implements UsersRepository {
       password_hash: data.password_hash,
       phone: data.phone,
       role,
+      avatar: null,
+      avatar_url: null,
       created_at: new Date(),
       updated_at: null,
     }

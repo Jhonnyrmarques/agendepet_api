@@ -27,6 +27,8 @@ model User {
   updated_at    DateTime?
   Pet           Pet[]
   RefreshToken  RefreshToken[]
+  PetShop       PetShop[]
+  Appointment   Appointment[]
 
   @@map("users")
 }
@@ -58,10 +60,121 @@ model Pet {
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
 
-  breed    Breed  @relation(fields: [breed_id], references: [id])
-  breed_id String
+  breed       Breed         @relation(fields: [breed_id], references: [id])
+  breed_id    String
+  Appointment Appointment[]
 
   @@map("pets")
+}
+
+model PetShop {
+  id         String    @id @default(uuid())
+  name       String
+  cnpj       String
+  phone      String
+  avatar     String?
+  avatar_url String?
+  address    String
+  latitude   Decimal
+  longitude  Decimal
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  user          User            @relation(fields: [user_id], references: [id])
+  user_id       String
+  Service       Service[]
+  BusinessHours BusinessHours[]
+  Employee      Employee[]
+  Appointment   Appointment[]
+
+  @@map("pet_shops")
+}
+
+model BusinessHours {
+  id         String    @id @default(uuid())
+  day        String
+  start_time String
+  end_time   String
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  petshop    PetShop @relation(fields: [petshop_id], references: [id])
+  petshop_id String
+
+  @@map("business_hours")
+}
+
+model Service {
+  id         String    @id @default(uuid())
+  name       String
+  time       String?
+  price      Decimal
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  petshop     PetShop       @relation(fields: [petshop_id], references: [id])
+  petshop_id  String
+  Employee    Employee[]
+  Appointment Appointment[]
+
+  @@map("services")
+}
+
+model Employee {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  phone      String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  petshop    PetShop @relation(fields: [petshop_id], references: [id])
+  petshop_id String
+  service    Service @relation(fields: [service_id], references: [id])
+  service_id String
+
+  WorkSchedule WorkSchedule[]
+  Appointment  Appointment[]
+
+  @@map("employees")
+}
+
+model WorkSchedule {
+  id         String    @id @default(uuid())
+  day        Decimal
+  start_time String
+  end_time   String
+  available  Boolean   @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  employee    Employee @relation(fields: [employee_id], references: [id])
+  employee_id String
+
+  @@map("work_schedule")
+}
+
+model Appointment {
+  id         String    @id @default(uuid())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  pet    Pet    @relation(fields: [pet_id], references: [id])
+  pet_id String
+
+  petshop    PetShop @relation(fields: [petshop_id], references: [id])
+  petshop_id String
+
+  service    Service @relation(fields: [service_id], references: [id])
+  service_id String
+
+  employee    Employee @relation(fields: [employee_id], references: [id])
+  employee_id String
+
+  @@map("appointments")
 }
 
 model RefreshToken {

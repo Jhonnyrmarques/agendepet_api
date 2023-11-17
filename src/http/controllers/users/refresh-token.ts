@@ -43,7 +43,7 @@ export async function refreshToken(
     .setCookie('refreshToken', refreshToken, {
       path: '/',
       secure: true,
-      sameSite: true,
+      sameSite: 'none',
       httpOnly: true,
     })
     .status(200)

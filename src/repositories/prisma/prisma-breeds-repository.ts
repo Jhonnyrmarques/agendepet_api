@@ -28,7 +28,7 @@ export class PrismaBreedsRepository implements BreedsRepository {
       },
       data: {
         name: data.name,
-        kind: data.kind,
+        specie: data.specie,
       },
     })
   }
@@ -54,7 +54,7 @@ export class PrismaBreedsRepository implements BreedsRepository {
             },
           },
           {
-            kind: {
+            specie: {
               contains: query,
               mode: 'insensitive',
             },

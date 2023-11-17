@@ -4,7 +4,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { UserRegisterUseCase } from './user-register'
 
 import { AuthenticationUseCase } from './authentication'
-import { InvalidCredentialsError } from '@/errors/invalid-credentials-error'
+import { ErrorMessages } from '@/errors/error-messages'
 
 let usersRepository: InMemoryUsersRepository
 let userRegisterUseCase: UserRegisterUseCase
@@ -48,7 +48,7 @@ describe('User Authentication Use Case', () => {
         email: 'johndoee@email.com',
         password: '123456',
       }),
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    ).rejects.toBeInstanceOf(ErrorMessages)
   })
 
   it('should not be possible to authenticate with an invalid password', async () => {
@@ -65,6 +65,6 @@ describe('User Authentication Use Case', () => {
         email: 'johndoe@email.com',
         password: '121212',
       }),
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    ).rejects.toBeInstanceOf(ErrorMessages)
   })
 })

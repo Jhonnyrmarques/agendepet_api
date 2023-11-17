@@ -1,4 +1,5 @@
-import { UserNotExistError } from '@/errors/user-not-exist-error'
+import { ErrorMessages } from '@/errors/error-messages'
+
 import { makeUserUpdateUseCase } from '@/usecases/factories/make-user-update-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -32,7 +33,7 @@ export async function userUpdate(request: FastifyRequest, reply: FastifyReply) {
       },
     })
   } catch (err) {
-    if (err instanceof UserNotExistError) {
+    if (err instanceof ErrorMessages) {
       reply.status(404).send({ message: err.message })
     }
 

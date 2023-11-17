@@ -2,8 +2,10 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 import { makeUserAuthenticationUseCase } from '@/usecases/factories/make-user-authentication-use-case'
-import { InvalidCredentialsError } from '@/errors/invalid-credentials-error'
+
 import { env } from '@/env'
+
+import { ErrorMessages } from '@/errors/error-messages'
 
 export async function authentication(
   request: FastifyRequest,
@@ -60,7 +62,7 @@ export async function authentication(
         token,
       })
   } catch (err) {
-    if (err instanceof InvalidCredentialsError) {
+    if (err instanceof ErrorMessages) {
       return reply.status(401).send({ message: err.message })
     }
 

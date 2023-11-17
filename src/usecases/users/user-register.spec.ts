@@ -4,8 +4,7 @@ import { compare } from 'bcryptjs'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { UserRegisterUseCase } from './user-register'
 
-import { UserAlreadyExistsError } from '@/errors/user-already-exists-error'
-import { PhoneAlreadyExistsError } from '@/errors/phone-already-exists-error'
+import { ErrorMessages } from '@/errors/error-messages'
 
 let usersRepository: InMemoryUsersRepository
 let userRegisterUseCase: UserRegisterUseCase
@@ -59,7 +58,7 @@ describe('User Register Use Case', () => {
         password_hash: '123456',
         phone: '1198523698',
       }),
-    ).rejects.toBeInstanceOf(UserAlreadyExistsError)
+    ).rejects.toBeInstanceOf(ErrorMessages)
   })
 
   it('should not be possible to register a user with an existing cell phone', async () => {
@@ -79,6 +78,6 @@ describe('User Register Use Case', () => {
         password_hash: '12345678',
         phone: '1198523698',
       }),
-    ).rejects.toBeInstanceOf(PhoneAlreadyExistsError)
+    ).rejects.toBeInstanceOf(ErrorMessages)
   })
 })

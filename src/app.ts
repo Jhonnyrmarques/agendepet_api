@@ -1,8 +1,8 @@
 import fastify from 'fastify'
 
 // Routes
-import { usersRoutes } from './http/controllers/users/users-routes'
-import { breedsRoutes } from './http/controllers/breeds/breeds-routes'
+import { usersRoutes } from './http/routes/users-routes'
+import { breedsRoutes } from './http/routes/breeds-routes'
 
 import { ZodError } from 'zod'
 import { env } from './env'

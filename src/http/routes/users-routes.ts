@@ -1,11 +1,12 @@
 import { FastifyInstance } from 'fastify'
-import { userRegister } from './user-register'
-import { authentication } from './authentication'
-import { userProfile } from './user-profile'
 
 import { verifyJWT } from '@/middlewares/verify-jwt'
-import { userUpdate } from './user-update'
-import { refreshToken } from './refresh-token'
+
+import { userRegister } from '../controllers/users/user-register'
+import { authentication } from '../controllers/users/authentication'
+import { refreshToken } from '../controllers/users/refresh-token'
+import { userUpdate } from '../controllers/users/user-update'
+import { userProfile } from '../controllers/users/user-profile'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/users', userRegister)

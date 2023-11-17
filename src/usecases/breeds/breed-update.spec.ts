@@ -3,8 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryBreedsReposiotry } from '@/repositories/in-memory/in-memory-breeds-repository'
 import { BreedUpdateUseCase } from './breed-update'
 import { BreedCreateUseCase } from './breed-create'
-
-import { BreedNotExistError } from '@/errors/breed-not-exist-error'
+import { ErrorMessages } from '@/errors/error-messages'
 
 let breedsRepository: InMemoryBreedsReposiotry
 let breedUpdateUseCase: BreedUpdateUseCase
@@ -20,7 +19,7 @@ describe('Update Breed Use Case', () => {
   it('should be possible to updated a breed', async () => {
     const { breed } = await breedCreateUseCase.execute({
       name: 'Pug',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     await breedUpdateUseCase.execute({ id: breed.id, name: 'Shiba' })
@@ -35,6 +34,6 @@ describe('Update Breed Use Case', () => {
         id: 'wrong-id',
         name: 'Pinscher',
       }),
-    ).rejects.toBeInstanceOf(BreedNotExistError)
+    ).rejects.toBeInstanceOf(ErrorMessages)
   })
 })

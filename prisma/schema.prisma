@@ -21,6 +21,8 @@ model User {
   password_hash String
   phone         String
   role          Role           @default(CLIENT)
+  avatar        String?
+  avatar_url    String?
   created_at    DateTime       @default(now())
   updated_at    DateTime?
   Pet           Pet[]
@@ -32,7 +34,7 @@ model User {
 model Breed {
   id         String    @id @default(uuid())
   name       String
-  kind       String
+  specie     String?
   created_at DateTime  @default(now())
   updated_at DateTime?
   Pet        Pet[]
@@ -43,11 +45,13 @@ model Breed {
 model Pet {
   id           String    @id @default(uuid())
   name         String
-  kind         String
+  specie       String?
   gender       String
   size         String
   age          Decimal
   observations String
+  avatar       String?
+  avatar_url   String?
   created_at   DateTime  @default(now())
   updated_at   DateTime?
 

@@ -9,7 +9,9 @@ async function main() {
       email: 'adminagendepet@email.com',
       password_hash: await hash('@admin123', 6),
       role: 'ADMIN',
-      phone: '',
+      avatar: null,
+      avatar_url: null,
+      phone: '(19)9936-96358',
     },
   })
 }

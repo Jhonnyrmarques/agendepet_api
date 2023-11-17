@@ -1,10 +1,11 @@
-import { BreedAlreadyExistsError } from '@/errors/breed-already-exists-error'
 import { BreedsRepository } from '@/repositories/breeds-repository'
 import { Breed } from '@prisma/client'
 
+import { ErrorMessages } from '@/errors/error-messages'
+
 interface BreedCreateUseCaseRequest {
   name: string
-  kind: string
+  specie: string
 }
 
 interface BreedCreateUseCaseResponse {
@@ -16,15 +17,15 @@ export class BreedCreateUseCase {
 
   async execute({
     name,
-    kind,
+    specie,
   }: BreedCreateUseCaseRequest): Promise<BreedCreateUseCaseResponse> {
     const breedExists = await this.breedsRepository.findBreedByName(name)
 
     if (breedExists) {
-      throw new BreedAlreadyExistsError()
+      throw new ErrorMessages('Breed already exists.')
     }
 
-    const breed = await this.breedsRepository.create({ name, kind })
+    const breed = await this.breedsRepository.create({ name, specie })
 
     return {
       breed,

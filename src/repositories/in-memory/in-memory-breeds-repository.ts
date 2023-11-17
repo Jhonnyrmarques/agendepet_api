@@ -9,7 +9,7 @@ export class InMemoryBreedsReposiotry implements BreedsRepository {
     const breed = {
       id: data.id ?? randomUUID(),
       name: data.name,
-      kind: data.kind,
+      specie: data.specie,
       created_at: new Date(),
       updated_at: null,
     }
@@ -36,8 +36,8 @@ export class InMemoryBreedsReposiotry implements BreedsRepository {
       this.breeds[index].name = data.name.toString()
     }
 
-    if (data.kind) {
-      this.breeds[index].kind = data.kind.toString()
+    if (data.specie) {
+      this.breeds[index].specie = data.specie.toString()
     }
 
     this.breeds[index].updated_at = new Date()
@@ -56,7 +56,7 @@ export class InMemoryBreedsReposiotry implements BreedsRepository {
   async fetchBreeds(query: string, page: number) {
     const breeds = this.breeds
       .filter((breed) => {
-        return breed.name.includes(query) || breed.kind.includes(query)
+        return breed.name.includes(query) || breed.specie.includes(query)
       })
       .slice((page - 1) * 20, page * 20)
 

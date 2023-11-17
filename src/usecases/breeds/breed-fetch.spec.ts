@@ -16,12 +16,12 @@ describe('Fetch Breed Use Case', () => {
   it('should be possible to fetch a breed by the name', async () => {
     await breedsRepository.create({
       name: 'Poodle',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     await breedsRepository.create({
       name: 'Maltês',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     const { breeds } = await breedFetchUseCase.execute({
@@ -36,12 +36,12 @@ describe('Fetch Breed Use Case', () => {
   it('should be possible to fetch a breed by the kind', async () => {
     await breedsRepository.create({
       name: 'Poodle',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     await breedsRepository.create({
       name: 'Maltês',
-      kind: 'Cachorro',
+      specie: 'Cachorro',
     })
 
     const { breeds } = await breedFetchUseCase.execute({
@@ -51,8 +51,8 @@ describe('Fetch Breed Use Case', () => {
 
     expect(breeds).toHaveLength(2)
     expect(breeds).toEqual([
-      expect.objectContaining({ kind: 'Cachorro' }),
-      expect.objectContaining({ kind: 'Cachorro' }),
+      expect.objectContaining({ specie: 'Cachorro' }),
+      expect.objectContaining({ specie: 'Cachorro' }),
     ])
   })
 
@@ -60,7 +60,7 @@ describe('Fetch Breed Use Case', () => {
     for (let i = 1; i <= 22; i++) {
       await breedsRepository.create({
         name: `Poodle ${i}`,
-        kind: 'Cachorro',
+        specie: 'Cachorro',
       })
     }
 

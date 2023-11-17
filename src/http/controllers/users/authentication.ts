@@ -6,6 +6,7 @@ import { makeUserAuthenticationUseCase } from '@/usecases/factories/make-user-au
 import { env } from '@/env'
 
 import { ErrorMessages } from '@/errors/error-messages'
+import { makeRefreshTokenUseCase } from '@/usecases/factories/make-refresh-token-use-case'
 
 export async function authentication(
   request: FastifyRequest,
@@ -50,16 +51,24 @@ export async function authentication(
       },
     )
 
+    const refreshTokenUseCase = makeRefreshTokenUseCase()
+
+    await refreshTokenUseCase.execute({
+      refresh_token: refreshToken,
+      user_id: user.id,
+    })
+
     return reply
       .setCookie('refreshToken', refreshToken, {
         path: '/',
         secure: true,
-        sameSite: true,
+        sameSite: 'none',
         httpOnly: true,
       })
       .status(200)
       .send({
         token,
+        user: { ...user, password_hash: undefined },
       })
   } catch (err) {
     if (err instanceof ErrorMessages) {

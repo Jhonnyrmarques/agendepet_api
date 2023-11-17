@@ -36,7 +36,7 @@ model User {
 model Breed {
   id         String    @id @default(uuid())
   name       String
-  specie     String?
+  specie     String
   created_at DateTime  @default(now())
   updated_at DateTime?
   Pet        Pet[]
@@ -47,7 +47,7 @@ model Breed {
 model Pet {
   id           String    @id @default(uuid())
   name         String
-  specie       String?
+  specie       String
   gender       String
   size         String
   age          Decimal

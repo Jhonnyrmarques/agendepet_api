@@ -3,6 +3,7 @@ import fastify from 'fastify'
 // Routes
 import { usersRoutes } from './http/routes/users-routes'
 import { breedsRoutes } from './http/routes/breeds-routes'
+import { petsRoutes } from './http/routes/pets-routes'
 
 import { ZodError } from 'zod'
 import { env } from './env'
@@ -28,6 +29,7 @@ app.register(fastifyCookie)
 
 app.register(usersRoutes)
 app.register(breedsRoutes)
+app.register(petsRoutes)
 
 // Formated Erros
 app.setErrorHandler((error, _, reply) => {

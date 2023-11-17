@@ -1,7 +1,8 @@
-import { UserNotExistError } from '@/errors/user-not-exist-error'
 import { UsersRepository } from '@/repositories/users-repository'
 
 import { User } from '@prisma/client'
+
+import { ErrorMessages } from '@/errors/error-messages'
 
 interface UserProfileUseCaseRequest {
   userId: string
@@ -20,7 +21,7 @@ export class UserProfileUseCase {
     const user = await this.usersRepository.findUserById(userId)
 
     if (!user) {
-      throw new UserNotExistError()
+      throw new ErrorMessages('User does not exist.')
     }
 
     return {
